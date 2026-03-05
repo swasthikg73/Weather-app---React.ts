@@ -138,7 +138,12 @@
   filter: invert(1);
 }
 
-/* .leaflet-tile {
-  filter: brightness(1.2) contrast(1.1);
-  background-color: #242424;
-} */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

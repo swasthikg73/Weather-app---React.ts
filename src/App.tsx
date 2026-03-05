@@ -2,14 +2,19 @@ import { DailyForecast } from "./components/DailyForecast";
 import { HourlyForecast } from "./components/HourlyForecast";
 import { CurrentWeather } from "./components/CurrentWeather";
 import { AdditionalInfo } from "./components/cards/AdditionalInfo";
-import Map from "./components/Map";
-import { useState } from "react";
+import Map from "./components/Map/Map";
+import { Suspense, useState } from "react";
 import type { Cords } from "./Types/types";
 import { LocationDropdowns } from "./components/dropdowns/LocationDropdowns";
 import { useQuery } from "@tanstack/react-query";
 import { getGeoCode } from "./API/Api";
 
 import { MapTypesDropdowns } from "./components/dropdowns/MapTypesDropdowns";
+import { MapLegend } from "./components/Map/MapLegend";
+import { CurrentSkeleton } from "./components/skeletons/CurrentSkeleton";
+import { DailySkeleton } from "./components/skeletons/DailySkeleton";
+import { AdditionalInfoSkeleton } from "./components/skeletons/AdditionalInfoSkeleton";
+import { HourlySkeleton } from "./components/skeletons/HourlySkeleton";
 
 function App() {
   const [coordinates, setCords] = useState<Cords>({ lat: 0, lon: 0 });
@@ -43,11 +48,26 @@ function App() {
             <MapTypesDropdowns mapType={mapType} setMapType={setMapType} />
           </div>
         </div>
-        <Map cords={cords} onMapClick={onMapClick} mapType={mapType} />
-        <CurrentWeather cords={cords} />
-        <HourlyForecast cords={cords} />
-        <DailyForecast cords={cords} />
-        <AdditionalInfo cords={cords} />
+        <div className="relative">
+          <Map cords={cords} onMapClick={onMapClick} mapType={mapType} />
+          <MapLegend mapType={mapType} />
+        </div>
+
+        <Suspense fallback={<CurrentSkeleton />}>
+          <CurrentWeather cords={cords} />
+        </Suspense>
+
+        <Suspense fallback={<HourlySkeleton />}>
+          <HourlyForecast cords={cords} />
+        </Suspense>
+
+        <Suspense fallback={<DailySkeleton />}>
+          <DailyForecast cords={cords} />
+        </Suspense>
+
+        <Suspense fallback={<AdditionalInfoSkeleton />}>
+          <AdditionalInfo cords={cords} />
+        </Suspense>
       </div>
     </>
   );
