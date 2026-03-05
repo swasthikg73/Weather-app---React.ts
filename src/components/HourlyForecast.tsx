@@ -28,10 +28,14 @@ export const HourlyForecast = ({ cords }: Props) => {
               })}
             </p>
             <WeatherIcon path={`${hour.weather[0].icon}`} />
-            <p>{Math.round(hour.temp)} °F</p>
+            <p>{Math.round(fahrenheitToCelsius(hour.temp))}°C</p>
           </div>
         ))}
       </Card>
     </div>
   );
 };
+
+function fahrenheitToCelsius(fahrenheit: number): number {
+  return (fahrenheit - 32) * (5 / 9);
+}

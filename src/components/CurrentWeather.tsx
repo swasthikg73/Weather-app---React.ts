@@ -17,9 +17,9 @@ export const CurrentWeather = ({ cords }: Props) => {
     <Card
       title="Current Weather"
       childrenClassName="flex flex-col gap-6 items-center ">
-      <div className="flex- flec-col gap-2 items-center">
+      <div className="flex flex-col gap-2 items-center">
         <h2 className="text-6xl font-semibold text-center ">
-          {Math.round(data?.current?.temp)} °F
+          {Math.round(fahrenheitToCelsius(data?.current?.temp))}°C
         </h2>
 
         <WeatherIcon
@@ -48,7 +48,7 @@ export const CurrentWeather = ({ cords }: Props) => {
       <div className="flex justify-between w-full">
         <div className="flex flex-col items-center gap-2">
           <p className="text-gray-500">Feels Like</p>
-          <p>{Math.round(data.current.feels_like)}°F</p>
+          <p>{Math.round(fahrenheitToCelsius(data.current.feels_like))}°C</p>
         </div>
 
         <div className="flex flex-col items-center gap-2">
@@ -64,3 +64,7 @@ export const CurrentWeather = ({ cords }: Props) => {
     </Card>
   );
 };
+
+function fahrenheitToCelsius(fahrenheit: number): number {
+  return (fahrenheit - 32) * (5 / 9);
+}

@@ -27,7 +27,7 @@ export const AdditionalInfo = ({ cords }: Props) => {
         <div className="flex justify-between" key={value}>
           <div className="flex gap-4 items-center">
             <span className="text-gray-500">{label}</span>
-            <img src={Icon} className="size-8 invert" alt="icons" />
+            <img src={Icon} className="size-8 icons" alt="icons" />
           </div>
           <span>
             <FormatComponent value={value} number={data.current[value]} />
@@ -49,7 +49,7 @@ function FormatComponent({ value, number }: { value: string; number: number }) {
   if (value === "wind_deg")
     return (
       <img
-        className="size-8 invert"
+        className="size-8 icons"
         src={UpArrow}
         style={{ transform: `rotate(${number}deg)` }}
         alt="icons"
