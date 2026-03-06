@@ -15,6 +15,7 @@ import { CurrentSkeleton } from "./components/skeletons/CurrentSkeleton";
 import { DailySkeleton } from "./components/skeletons/DailySkeleton";
 import { AdditionalInfoSkeleton } from "./components/skeletons/AdditionalInfoSkeleton";
 import { HourlySkeleton } from "./components/skeletons/HourlySkeleton";
+import { Sidebar } from "./components/Sidebar/Sidebar";
 
 function App() {
   const [coordinates, setCords] = useState<Cords>({ lat: 0, lon: 0 });
@@ -69,6 +70,8 @@ function App() {
           <AdditionalInfo cords={cords} />
         </Suspense>
       </div>
+
+      <Sidebar cords={cords} />
     </>
   );
 }
