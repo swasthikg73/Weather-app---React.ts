@@ -3,12 +3,22 @@ import { MapContainer, TileLayer, useMap, Marker } from "react-leaflet";
 import type { Cords } from "../../Types/types";
 import { useEffect } from "react";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 interface Props {
   cords: Cords;
   onMapClick: (lat: number, lon: number) => void;
   mapType: string;
 }
+
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 const Map = ({ cords, onMapClick, mapType }: Props) => {
   const API_KEY = import.meta.env.VITE_API_KEY;
