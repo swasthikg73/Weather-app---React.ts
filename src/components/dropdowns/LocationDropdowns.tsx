@@ -44,7 +44,7 @@ export function LocationDropdowns({ location, setLocation }: Props) {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-[250px] p-0 z-1001">
+      <PopoverContent className=" w-80 md:w-[250px] p-0 z-1001">
         <Command>
           <CommandInput placeholder="Search city..." />
           <CommandList className="max-h-60 overflow-y-auto">

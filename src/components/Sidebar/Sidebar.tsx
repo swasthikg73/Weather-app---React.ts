@@ -2,15 +2,34 @@ import { getAirPollution } from "@/API/Api";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card } from "../cards/Card";
 import { Slider } from "@/components/ui/slider";
+import clsx from "clsx";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import information from "../../assets/Icons/information.svg";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Suspense, type Dispatch, type SetStateAction } from "react";
+
+import ChevronLeft from "../../assets/Icons/ChevronLeft.svg";
 
 interface Props {
   cords: { lat: number; lon: number };
+  isSibebarOpen: boolean;
+  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Sidebar = ({ cords }: Props) => {
+export const Sidebar = (props: Props) => {
+  const { isSibebarOpen, setSidebarOpen } = props;
   return (
-    <div className="fixed w-90 bg-sidebar h-screen shadow-md z-1000 top-0 right-0 py-8 px-4">
-      <AirPollution cords={cords} />
+    <div
+      className={clsx(
+        "fixed w-90 md:w-100 lg:w-[var(--sidebar-width)] overflow-y-scroll bg-sidebar h-screen shadow-md z-1000 top-0 right-0 py-6 px-4 transition-tranform duration-600",
+        isSibebarOpen ? "translate-x-0" : "translate-x-full",
+      )}>
+      <button onClick={() => setSidebarOpen(false)}>
+        <img src={ChevronLeft} className="size-8  icons -ml-2" alt="" />{" "}
+      </button>
+      <Suspense>
+        <AirPollution {...props} />
+      </Suspense>
     </div>
   );
 };
@@ -25,22 +44,112 @@ function AirPollution({ cords }: Props) {
     <div className="flex flex-col gap-4 justify-center">
       <h1 className="text-2xl font-semibold">Air Pollution</h1>
       <h1 className="text-5xl font-semibold">{data.list[0].main.aqi}</h1>
-      <h1 className="text-2xl font-semibold">AQI</h1>
-
+      <div className="flex gap-2 items-center">
+        <h1 className="text-2xl font-semibold">AQI</h1>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <img
+                src={information}
+                className="size-6 cursor-pointer icons"
+                alt=""
+              />
+            </TooltipTrigger>
+            <TooltipContent className="z-2000">
+              <p className="max-w-xs text-xl">
+                Air Quality Index. Possible values: 1, 2, 3, 4, 5. Where 1 =
+                Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5 = Very Poor.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
       {Object.entries(data.list[0].components).map(([key, value]) => {
         const pollutant =
           airQualityRanges[key.toUpperCase() as keyof typeof airQualityRanges];
-        const max = pollutant["Very Poor"].min;
+        const max = Math.max(pollutant["Very Poor"].min);
+
+        const currentLevel = (() => {
+          for (const [level, range] of Object.entries(pollutant)) {
+            if (
+              value >= range.min &&
+              (range.max === null || value <= range.max)
+            )
+              return level;
+          }
+          return "Very Poor";
+        })();
+
+        const qualityColor = (() => {
+          switch (currentLevel) {
+            case "Good":
+              return "bg-green-500";
+
+            case "Fair":
+              return "bg-yellow-500";
+
+            case "Moderate":
+              return "bg-orange-500";
+
+            case "Poor":
+              return "bg-red-500";
+
+            case "Very Poor":
+              return "bg-purple-500";
+
+            default:
+              return "bg-zinc-500";
+          }
+        })();
+
         return (
           <Card
             key={key}
             childrenClassName="flex flex-col gap-3"
             className="flex flex-col hover:scale-105 transition-transform duration-300 from-sidebar-accent to-sidebar-accent/60 gap-0!">
             <div className="flex justify-between">
-              <span className="text-lg font-bold capitalize">{key}</span>
+              <div className="flex gap-2 items-center">
+                <span className="text-lg font-bold capitalize">{key}</span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <img
+                        src={information}
+                        className="size-6 cursor-pointer icons"
+                        alt=""
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent className="z-2000">
+                      <p className="max-w-xs">
+                        Concentration of{" "}
+                        {pollutantNameMapping[key.toUpperCase() as Pollutant]}
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
               <span className="text-lg font-semibold ">{value}</span>
             </div>
-            <Slider min={0} disabled />
+            <Slider min={0} max={max} defaultValue={[value]} disabled />
+            <div className="flex justify-between text-xs">
+              <p>0</p>
+              <p>{max}</p>
+            </div>
+
+            <div className="flex items-center justify-between">
+              {Object.keys(pollutant).map((quality, i) => (
+                <span
+                  key={i}
+                  className={clsx(
+                    `px-2 py-1 text-xs rounded-md font-medium`,
+                    quality == currentLevel
+                      ? qualityColor
+                      : "text-muted bg-muted-foreground",
+                  )}>
+                  {quality}
+                </span>
+              ))}
+            </div>
           </Card>
         );
       })}

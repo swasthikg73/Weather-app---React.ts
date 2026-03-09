@@ -15,7 +15,7 @@ export const MapLegend = ({ mapType }: Props) => {
     .join(",");
 
   return (
-    <div className="absolute z-1000 right-6 top-4 w-96 rounded-xl bg-background/50 p-4 shadow-lg border border-accent/70">
+    <div className="absolute z-1000 right-2 md:right-6 top-4 w-80 lg:w-96 rounded-xl bg-background/50 p-2 md:p-4 shadow-lg border border-accent/70">
       <h3 className="text-sm font-semibold text-foreground capitalize">
         {data.title}
       </h3>

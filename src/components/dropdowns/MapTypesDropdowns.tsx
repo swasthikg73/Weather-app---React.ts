@@ -25,7 +25,7 @@ export const MapTypesDropdowns = ({ mapType, setMapType }: Props) => {
     <select
       name=""
       id=""
-      className="bg-zinc-900 text-white border-2 p-1 w-45 rounded-md decoration-0"
+      className="bg-zinc-900 text-white border-2 p-1 w-full md:w-45 rounded-md decoration-0"
       value={mapType}
       onChange={(e) => setMapType(e.target.value)}>
       {mapTypes.map((type, i) => (
