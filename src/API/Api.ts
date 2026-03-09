@@ -22,13 +22,13 @@ export const getWeather = async ({ lat, lon }: { lat: number, lon: number }) => 
 
 //Geo Code
 export const getGeoCode = async (City: string) => {
-    const res = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${City}&limit=1&appid=${API_KEY}`);
+    const res = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${City}&limit=1&appid=${API_KEY}`);
     return GeoCodeSchema.parse(res.data)
 }
 
 //Air pollution
 export const getAirPollution = async ({ lat, lon }: { lat: number, lon: number }) => {
-    const res = await axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
+    const res = await axios.get(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
     return AirPollutionSchema.parse(res.data)
 }
 
