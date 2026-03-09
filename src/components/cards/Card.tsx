@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 
@@ -14,13 +15,17 @@ export const Card = ({
   title,
   className,
 }: Props) => {
+  const { theme } = useTheme();
   return (
     <div
       className={clsx(
-        "rounded-xl bg-card shadow-md p-4 flex flex-col gap-4",
+        "rounded-xl border shadow-md p-4 flex flex-col gap-4 bg-card",
         className,
+        theme != "dark"
+          ? "border-amber-50"
+          : "bg-linear-to-br from-card to-card/60",
       )}>
-      <h3 className="text-2xl">{title}</h3>
+      <h3 className="text-md md:text-xl lg:text-2xl">{title}</h3>
       <div
         className={clsx(
           childrenClassName,

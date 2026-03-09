@@ -27,7 +27,7 @@ export const AdditionalInfo = ({ cords }: Props) => {
         <div className="flex justify-between" key={value}>
           <div className="flex gap-4 items-center">
             <span className="text-gray-500">{label}</span>
-            <img src={Icon} className="size-8 icons" alt="icons" />
+            <img src={Icon} className=" size-6 md:size-8 icons" alt="icons" />
           </div>
           <span>
             <FormatComponent value={value} number={data.current[value]} />
