@@ -11,7 +11,7 @@ export const AdditionalInfoSkeleton = (props: Props) => {
       {Array.from({ length: 6 }).map((_, i) => (
         <div className="flex justify-between" key={i}>
           <div className="flex gap-4 items-center">
-            <Skeleton className="w-20 h-8" />
+            <Skeleton className="w-20 h-8 bg-sidebar" />
             <Skeleton className="size-8 rounded-full" />
           </div>
           <span>
