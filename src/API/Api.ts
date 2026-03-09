@@ -29,8 +29,6 @@ export const getGeoCode = async (City: string) => {
 //Air pollution
 export const getAirPollution = async ({ lat, lon }: { lat: number, lon: number }) => {
     const res = await axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
-    console.log(res.data);
-
     return AirPollutionSchema.parse(res.data)
 }
 
