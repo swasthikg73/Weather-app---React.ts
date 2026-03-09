@@ -64,7 +64,7 @@ function MapTileLayer() {
   useEffect(() => {
     const tileLayer = new MaptilerLayer({
       style: "basic-dark",
-      apiKey: "zNQXACqGJBO6JtVVLAyC",
+      apiKey: import.meta.env.VITE_TILE_LAYER_KEY,
     });
 
     tileLayer.addTo(map);
