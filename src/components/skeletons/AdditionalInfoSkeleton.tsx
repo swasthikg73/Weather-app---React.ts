@@ -1,9 +1,7 @@
 import { Card } from "../cards/Card";
 import { Skeleton } from "../ui/skeleton";
 
-interface Props {}
-
-export const AdditionalInfoSkeleton = (props: Props) => {
+export const AdditionalInfoSkeleton = () => {
   return (
     <Card
       title="Additional Weather Info"

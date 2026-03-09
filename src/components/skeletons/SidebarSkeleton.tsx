@@ -1,9 +1,7 @@
 import SideCardSkeleton from "./SideCardSkeleton";
 import { Skeleton } from "../ui/skeleton";
 
-type Props = {};
-
-export default function SideBarSkeleton({}: Props) {
+export default function SideBarSkeleton() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold">Air Pollution</h1>

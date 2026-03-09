@@ -1,9 +1,7 @@
 import { Card } from "../cards/Card";
 import { Skeleton } from "../ui/skeleton";
 
-interface Props {}
-
-export const CurrentSkeleton = (props: Props) => {
+export const CurrentSkeleton = () => {
   return (
     <Card
       title="Current Weather"

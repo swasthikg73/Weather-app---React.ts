@@ -1,9 +1,7 @@
 import { Card } from "../cards/Card";
 import { Skeleton } from "../ui/skeleton";
 
-interface Props {}
-
-export const DailySkeleton = (props: Props) => {
+export const DailySkeleton = () => {
   return (
     <Card title="Daily Forecast" childrenClassName="flex flex-col ">
       {Array.from({ length: 8 }).map((_, i) => (

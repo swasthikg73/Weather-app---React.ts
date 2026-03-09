@@ -1,9 +1,7 @@
 import { Card } from "../cards/Card";
 import { Skeleton } from "../ui/skeleton";
 
-interface Props {}
-
-export const HourlySkeleton = (props: Props) => {
+export const HourlySkeleton = () => {
   return (
     <Card
       title="Hourly Forecast (48 Hours)"
